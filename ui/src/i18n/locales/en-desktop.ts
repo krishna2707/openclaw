@@ -26,7 +26,9 @@ const enDesktop = {
     refreshing: "Refreshing…",
     loading: "Loading desktop sources…",
     empty: "No desktop-capable sources are available.",
-    sourceUnavailable: "The requested desktop is unavailable. Retry when the machine is ready.",
+    sourceUnavailable:
+      "The requested desktop is unavailable. Check Host Desktop and screen-sharing setup, then retry.",
+    openSystemsSetup: "Open desktop setup",
     macLocked:
       "This Mac is locked. Sign in through Screen Sharing or on the Mac to use computer control.",
     macLockStateUnknown:

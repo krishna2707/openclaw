@@ -50,6 +50,7 @@ export function createDesktopPanel(host: SolidBridgeElement<DesktopPanelInputs>)
   let controlling = false;
   let errorText: string | null = null;
   let noticeText: string | null = null;
+  let showSetupAction = false;
   let disconnectedReason: string | null = null;
   let desktopApps: WorkerDesktopAppId[] = [];
   let sizingMode: desktopTransport.DesktopSizingMode = "fit";
@@ -344,6 +345,7 @@ export function createDesktopPanel(host: SolidBridgeElement<DesktopPanelInputs>)
         await connectEnvironment(requestedSource, host.documentControl);
       } else if (host.requestedSource !== null || host.sessionKey !== null) {
         noticeText = t("desktop.sourceUnavailable");
+        showSetupAction = true;
         notify();
       }
     }
@@ -410,6 +412,7 @@ export function createDesktopPanel(host: SolidBridgeElement<DesktopPanelInputs>)
     disconnectedReason = null;
     if (!takeoverRecovery) {
       noticeText = null;
+      showSetupAction = false;
     }
     controlTakeoverRecoveryUsed = takeoverRecovery;
     notify();
@@ -592,6 +595,7 @@ export function createDesktopPanel(host: SolidBridgeElement<DesktopPanelInputs>)
     ) {
       const operator = formatUiExternalText(reason.slice("control-taken:".length));
       noticeText = operator ? t("desktop.controlTakenBy", { operator }) : t("desktop.controlTaken");
+      showSetupAction = false;
       notify();
       void connectEnvironment(environmentId, false, true);
       return;
@@ -637,6 +641,7 @@ export function createDesktopPanel(host: SolidBridgeElement<DesktopPanelInputs>)
           hasTarget: host.sessionKey !== null || host.requestedSource !== null,
           errorText: controls.launcher.feedback().error ?? errorText,
           noticeText,
+          showSetupAction,
           availability: sessionSource.desktopAvailability,
           picker: {
             automatic: usesAutomaticSource() && host.embedded && host.sessionKey !== null,

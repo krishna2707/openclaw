@@ -1,4 +1,5 @@
 import type { JSX } from "@solidjs/web";
+import { pathForRoute } from "../../app-route-paths.ts";
 import { t } from "../../lib/reactive/i18n.ts";
 import { DockResizer } from "../dock-layout-solid.tsx";
 import { FullscreenButton } from "../fullscreen-solid.tsx";
@@ -84,6 +85,11 @@ export function DesktopPresentation(props: { view: DesktopPresentationOptions })
               props.view.content.errorText
             }
             noticeText={props.view.content.noticeText}
+            setupHref={
+              props.view.content.showSetupAction
+                ? pathForRoute("systems", props.view.focusTarget().basePath)
+                : null
+            }
             availability={props.view.content.availability}
           />
           <DesktopAudioNotice state={props.view.audio.state()} />
